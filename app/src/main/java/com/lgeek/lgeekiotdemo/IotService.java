@@ -1,13 +1,16 @@
 package com.lgeek.lgeekiotdemo;
 
+import android.app.Instrumentation;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.view.KeyEvent;
 
 import com.lgeek.iot.parse.bean.TvDeviceAttr;
 import com.lgeek.iot.parse.callback.AbServiceCallBack;
 import com.lgeek.iot.parse.com.LgeekSdkMgr;
 import com.lgeek.iot.parse.com.TvDeviceAttrMgr;
+import com.lgeek.iot.parse.utils.LogUtils;
 
 import org.json.JSONObject;
 
@@ -227,9 +230,28 @@ public class IotService extends Service {
             super.onBunchShows(item);
         }
 
-        //模拟遥控器操作
+        //模拟遥控器操作  action 对应 KeyEventUtils 里面值
         @Override
-        public void onRemoteControllExecute(String action) {
+        public void onRemoteControllExecute(final String action) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Instrumentation inst = new Instrumentation();
+                    int keyEvent = KeyEventUtils.getKeyEventCodeByStringKey(action);
+                    if (action.equalsIgnoreCase(KeyEventUtils.KEYCODE_HOME)) {
+
+                        return;
+
+                    }
+                    if (action.equalsIgnoreCase(KeyEventUtils.KEYCODE_BACK)) {
+
+
+                      return;
+                    }
+                    inst.sendKeyDownUpSync(keyEvent);
+
+                }
+            }).start();
             super.onRemoteControllExecute(action);
         }
 
@@ -284,7 +306,42 @@ public class IotService extends Service {
 
         //模拟按键输入
         @Override
-        public void onSimulateKeyEvent(String action) {
+        public void onSimulateKeyEvent(final String action) {
+            // 返回Android ，标准code
+            int keyEvent = Integer.parseInt(action);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        int keyEvent = Integer.parseInt(action);
+                        Instrumentation inst = new Instrumentation();
+                        switch (keyEvent) {
+                            case KeyEvent.KEYCODE_HOME:
+
+                                break;
+                            case KeyEvent.KEYCODE_CHANNEL_UP:
+
+                                onLivePrevChannel();
+                                break;
+                            case KeyEvent.KEYCODE_CHANNEL_DOWN:
+
+                                onLiveNextChannel();
+
+                                break;
+                            case KeyEvent.KEYCODE_BACK:
+
+                                break;
+                            default:
+                                break;
+                        }
+
+                        inst.sendKeyDownUpSync(keyEvent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        LogUtils.eTag(TAG, e.toString());
+                    }
+                }
+            }).start();
             super.onSimulateKeyEvent(action);
         }
 
@@ -293,7 +350,5 @@ public class IotService extends Service {
         public void on551IotReSetConfigs(JSONObject jsonObject) {
             super.on551IotReSetConfigs(jsonObject);
         }
-
-
     }
 }
