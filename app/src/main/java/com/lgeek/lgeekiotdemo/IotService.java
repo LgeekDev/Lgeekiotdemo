@@ -63,7 +63,7 @@ public class IotService extends Service {
 
         }
 
-        // 设备 状态 全量上报  当前设备状态上报   目前支持 电视
+        //服务端主动要求设备端上报设备状态   设备 状态 全量上报  当前设备状态上报   目前支持 电视
 
         @Override
         public void devConfigPortAll() {
@@ -75,7 +75,7 @@ public class IotService extends Service {
             tvDeviceAttr.setPower(1);//开关
             tvDeviceAttr.setSwitchSignalSource("HDMI1");//视频源
             tvDeviceAttr.setVoice(50);//声音
-            TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);
+            TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);//用户可以主动上报
 
 
 
