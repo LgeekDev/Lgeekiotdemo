@@ -38,10 +38,6 @@ public class IotService extends Service {
 
         LgeekSdkMgr.getInstance().addListener(mMsgHandler);
 
-
-        LgeekSdkMgr.getInstance().a("hh",2);
-
-
         super.onCreate();
     }
 
