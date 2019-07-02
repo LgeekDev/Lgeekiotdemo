@@ -38,6 +38,10 @@ public class IotService extends Service {
 
         LgeekSdkMgr.getInstance().addListener(mMsgHandler);
 
+
+        LgeekSdkMgr.getInstance().a("hh",2);
+
+
         super.onCreate();
     }
 
@@ -170,7 +174,7 @@ public class IotService extends Service {
             super.onLiveOpen();
         }
 
-        //打开指定页面，包括直播页面
+        //打开指定页面，包括直播页面，页面跳转
         @Override
         public void onLiveOpen(String url) {
             super.onLiveOpen(url);
