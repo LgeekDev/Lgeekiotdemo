@@ -77,6 +77,8 @@ public class IotService extends Service {
             tvDeviceAttr.setVoice(50);//声音
             TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);
 
+
+
         }
 
         @Override
