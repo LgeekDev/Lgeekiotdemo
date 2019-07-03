@@ -68,17 +68,7 @@ public class IotService extends Service {
         @Override
         public void devConfigPortAll() {
             super.devConfigPortAll();
-
-            // 如果你电视设备可以拿到这些属性可以这样上报。
-            TvDeviceAttr tvDeviceAttr = new TvDeviceAttr();
-            tvDeviceAttr.setMute(1);//静音
-            tvDeviceAttr.setPower(1);//开关
-            tvDeviceAttr.setSwitchSignalSource("HDMI1");//视频源
-            tvDeviceAttr.setVoice(50);//声音
-            TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);//用户可以主动上报
-
-
-
+            reportTvStatus();
         }
 
         @Override
@@ -123,7 +113,7 @@ public class IotService extends Service {
 
         }
 
-        //app 检测更新
+        //app 检测更新 服务端下发指令，要求客户端检测更新
         @Override
         public void appUpdate(String version) {
             super.appUpdate(version);
@@ -194,6 +184,21 @@ public class IotService extends Service {
         @Override
         public void onLiveOpen(String url, String type) {
             super.onLiveOpen(url, type);
+
+            //下面是清鹤需要
+               if("MUSIC".equalsIgnoreCase(url)){
+//                   打开音乐界面
+
+               }
+//            音乐：MUSIC
+//            投屏:AIRPLAY
+//            酒店商城：HOTEL_SHOP(暂不支持单个商城界面跳转)
+//            酒店介绍:HOTEL_INTRODUCE
+//            手机遥控：MOBILE_CONTROL
+//            返回导航界面：MENU
+//            酒店服务界面：HOTEL_SERVICE
+//            叫醒服务：MORNING_CALL
+//            一键送物：LEASE_GOODS
         }
 
         //切换直播频道  number  频道号
@@ -309,8 +314,7 @@ public class IotService extends Service {
         //模拟按键输入
         @Override
         public void onSimulateKeyEvent(final String action) {
-            // 返回Android ，标准code
-            int keyEvent = Integer.parseInt(action);
+            // 返回Android 标准code
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -353,4 +357,30 @@ public class IotService extends Service {
             super.on551IotReSetConfigs(jsonObject);
         }
     }
+
+
+//信号源
+//            obj.put("player", "1");
+//            obj.put("vga", "2");
+//            obj.put("hdmi", "3");
+//            obj.put("dvd", "4");
+//            obj.put("storage", "5");
+//            obj.put("av", "6");
+//            obj.put("atv", "7");
+//            obj.put("dtv", "8");
+//            obj.put("hdmi2", "9");
+//            obj.put("hdmi3", "10");
+
+
+    //反馈TV状态  设备状态变化时候用户主动上报
+    private void reportTvStatus(){
+        // 如果你电视设备可以拿到这些属性可以这样上报。
+        TvDeviceAttr tvDeviceAttr = new TvDeviceAttr();
+        tvDeviceAttr.setMute(1);//静音  0  or  1
+        tvDeviceAttr.setPower(1);//开关   0  or  1
+        tvDeviceAttr.setSwitchSignalSource("3");//视频源
+        tvDeviceAttr.setVoice(50);//声音 0-100
+        TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);//用户可以主动上报
+    }
+
 }
