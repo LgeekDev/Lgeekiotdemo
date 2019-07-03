@@ -186,10 +186,10 @@ public class IotService extends Service {
             super.onLiveOpen(url, type);
 
             //下面是清鹤需要
-               if("MUSIC".equalsIgnoreCase(url)){
+            if ("MUSIC".equalsIgnoreCase(url)) {
 //                   打开音乐界面
 
-               }
+            }
 //            音乐：MUSIC
 //            投屏:AIRPLAY
 //            酒店商城：HOTEL_SHOP(暂不支持单个商城界面跳转)
@@ -240,6 +240,22 @@ public class IotService extends Service {
         //模拟遥控器操作  action 对应 KeyEventUtils 里面值
         @Override
         public void onRemoteControllExecute(final String action) {
+
+//            action=
+//                    //    OK  确认
+//                    //    UP   向上
+//                    //    DOWN  向下
+//                    //    LEFT 向左
+//                    //    RIGHT  向右
+//                    //    VUP  音量
+//                    //    VDOWN  音量-
+//                    //    MUTE  静音
+//                    //    BACK  返回
+//                    //    HOME  首页
+//                    //    CANCEL  取消
+//                    //    PAGEDOWN   下一页
+//                    //    PAGEUP 上一页
+//
             new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -253,7 +269,7 @@ public class IotService extends Service {
                     if (action.equalsIgnoreCase(KeyEventUtils.KEYCODE_BACK)) {
 
 
-                      return;
+                        return;
                     }
                     inst.sendKeyDownUpSync(keyEvent);
 
@@ -373,7 +389,7 @@ public class IotService extends Service {
 
 
     //反馈TV状态  设备状态变化时候用户主动上报
-    private void reportTvStatus(){
+    private void reportTvStatus() {
         // 如果你电视设备可以拿到这些属性可以这样上报。
         TvDeviceAttr tvDeviceAttr = new TvDeviceAttr();
         tvDeviceAttr.setMute(1);//静音  0  or  1
