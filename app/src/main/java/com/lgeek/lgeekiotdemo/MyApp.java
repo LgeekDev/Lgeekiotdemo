@@ -40,9 +40,13 @@ public class MyApp extends Application {
         * 参数1 ： 是否开启日志   参数2  是否输出日志到文件  ， 参数3  日志保存天数
         * */
         LgeekIotUtils.initLog(true, true, 3);// 需要 文件读取权限 8.0 动态权限厂家自己适配
-        /*
-        *  参数 2 ，3， 4  可参考上面注释掉代码
-        * */
+
+        /**
+         * @param application
+         * @param deviceType 固定值
+         * @param deviceTypeId 设备类型，4001为第三方机顶盒
+         * @param deviceTypeName 设备名称 逻辑iot的时候需要用到该字段，可填写App或厂商的名字
+         */
         LgeekSdkMgr.getInstance().init(this, "2", "4001", "机第三方机顶盒");
         // 开启服务
         getApplicationContext().startService(new Intent(this,IotService.class));

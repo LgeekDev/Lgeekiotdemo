@@ -242,19 +242,19 @@ public class IotService extends Service {
         public void onRemoteControllExecute(final String action) {
 
 //            action=
-//                    //    OK  确认
-//                    //    UP   向上
-//                    //    DOWN  向下
-//                    //    LEFT 向左
-//                    //    RIGHT  向右
-//                    //    VUP  音量
-//                    //    VDOWN  音量-
-//                    //    MUTE  静音
-//                    //    BACK  返回
-//                    //    HOME  首页
-//                    //    CANCEL  取消
-//                    //    PAGEDOWN   下一页
-//                    //    PAGEUP 上一页
+                    //    OK  确认
+                    //    UP   向上
+                    //    DOWN  向下
+                    //    LEFT 向左
+                    //    RIGHT  向右
+                    //    VUP  音量
+                    //    VDOWN  音量-
+                    //    MUTE  静音
+                    //    BACK  返回
+                    //    HOME  首页
+                    //    CANCEL  取消
+                    //    PAGEDOWN   下一页
+                    //    PAGEUP 上一页
 //
             new Thread(new Runnable() {
                 @Override
@@ -278,16 +278,13 @@ public class IotService extends Service {
             super.onRemoteControllExecute(action);
         }
 
-        //选择第几个
+        /**
+         * 选择第几个
+         * @param value
+         */
         @Override
-        public void onchoose542(int value) {
-            super.onchoose542(value);
-        }
-
-        //选择第几个
-        @Override
-        public void onchoose543(int value) {
-            super.onchoose543(value);
+        public void onChoose(int value) {
+            super.onChoose(value);
         }
 
         //打开腾讯视频
@@ -360,7 +357,7 @@ public class IotService extends Service {
                         inst.sendKeyDownUpSync(keyEvent);
                     } catch (Exception e) {
                         e.printStackTrace();
-                        LogUtils.eTag(TAG, e.toString());
+                        LogUtils.eTag("", e.toString());
                     }
                 }
             }).start();
