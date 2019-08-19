@@ -162,12 +162,6 @@ public class IotService extends Service {
             super.onLiveOpen();
         }
 
-        //打开指定页面，包括直播页面，页面跳转
-        @Override
-        public void onLiveOpen(String url) {
-            super.onLiveOpen(url);
-        }
-
         //切换直播频道  number  频道号
         @Override
         public void onLiveChangeChannel(int number) {
