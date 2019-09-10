@@ -3,9 +3,11 @@ package com.lgeek.lgeekiotdemo;
 import android.app.Instrumentation;
 import android.app.Service;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.IBinder;
 import android.view.KeyEvent;
 
+import com.blankj.utilcode.util.EncryptUtils;
 import com.lgeek.iot.parse.bean.TvDeviceAttr;
 import com.lgeek.iot.parse.callback.AbServiceCallBack;
 import com.lgeek.iot.parse.com.LgeekSdkMgr;
@@ -154,6 +156,7 @@ public class IotService extends Service {
         @Override
         public void onTvsetSwitchSignalSource(String value) {
             super.onTvsetSwitchSignalSource(value);
+
         }
 
         //打开直播
@@ -236,19 +239,19 @@ public class IotService extends Service {
         public void onRemoteControllExecute(final String action) {
 
 //            action=
-                    //    OK  确认
-                    //    UP   向上
-                    //    DOWN  向下
-                    //    LEFT 向左
-                    //    RIGHT  向右
-                    //    VUP  音量
-                    //    VDOWN  音量-
-                    //    MUTE  静音
-                    //    BACK  返回
-                    //    HOME  首页
-                    //    CANCEL  取消
-                    //    PAGEDOWN   下一页
-                    //    PAGEUP 上一页
+            //    OK  确认
+            //    UP   向上
+            //    DOWN  向下
+            //    LEFT 向左
+            //    RIGHT  向右
+            //    VUP  音量
+            //    VDOWN  音量-
+            //    MUTE  静音
+            //    BACK  返回
+            //    HOME  首页
+            //    CANCEL  取消
+            //    PAGEDOWN   下一页
+            //    PAGEUP 上一页
 //
             new Thread(new Runnable() {
                 @Override
@@ -274,6 +277,7 @@ public class IotService extends Service {
 
         /**
          * 选择第几个
+         *
          * @param value
          */
         @Override
@@ -297,6 +301,42 @@ public class IotService extends Service {
         @Override
         public void customAPP(String app_pg, String app_commend, String app_text) {
             super.customAPP(app_pg, app_commend, app_text);
+
+            if ("com.ktcp.tvvideo".equalsIgnoreCase(app_pg)) {
+                //腾讯视频vip
+                if ("open".equalsIgnoreCase(app_commend)) {
+
+                    try {
+                        Intent intent = getPackageManager().getLaunchIntentForPackage(app_pg);
+                        if (intent != null) {
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+//                            LogUtils.eTag(TAG, e.toString());
+                    }
+
+                } else if ("exit".equalsIgnoreCase(app_commend)) {
+                    //退出腾讯视频
+                } else {
+                    try {
+                        String uriString = "txaiagent://openintent?action=queryVoiceText&text=" + app_text;
+
+                        String apiKey = "cb1fbdd4fec9e52ca3cd4b9b4dbe1c25";
+                        String token = EncryptUtils.encryptHmacSHA1ToString(uriString.getBytes(), apiKey.getBytes());
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse(uriString));
+                        intent.putExtra("token", token);
+                        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                        IotService.this.sendBroadcast(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
         }
 
         //返回上一页
