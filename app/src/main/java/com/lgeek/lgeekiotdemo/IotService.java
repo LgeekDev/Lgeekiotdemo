@@ -303,40 +303,40 @@ public class IotService extends Service {
             super.customAPP(app_pg, app_commend, app_text);
 
 
-//            if ("com.ktcp.tvvideo".equalsIgnoreCase(app_pg)) {
-//                //腾讯视频vip
-//                if ("open".equalsIgnoreCase(app_commend)) {
-//
-//                    try {
-//                        Intent intent = getPackageManager().getLaunchIntentForPackage(app_pg);
-//                        if (intent != null) {
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                        }
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-////                            LogUtils.eTag(TAG, e.toString());
-//                    }
-//
-//                } else if ("exit".equalsIgnoreCase(app_commend)) {
-//                    //退出腾讯视频
-//                } else {
-//                    try {
-//                        String uriString = "txaiagent://openintent?action=queryVoiceText&text=" + app_text;
-//
-//                        String apiKey = "cb1fbdd4fec9e52ca3cd4b9b4dbe1c25";
-//                        String token = EncryptUtils.encryptHmacSHA1ToString(uriString.getBytes(), apiKey.getBytes());
-//                        Intent intent = new Intent();
-//                        intent.setData(Uri.parse(uriString));
-//                        intent.putExtra("token", token);
-//                        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-//                        IotService.this.sendBroadcast(intent);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//            }
+            if ("com.ktcp.tvvideo".equalsIgnoreCase(app_pg)) {
+                //腾讯视频vip
+                if ("open".equalsIgnoreCase(app_commend)) {
+
+                    try {
+                        Intent intent = getPackageManager().getLaunchIntentForPackage(app_pg);
+                        if (intent != null) {
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+//                            LogUtils.eTag(TAG, e.toString());
+                    }
+
+                } else if ("exit".equalsIgnoreCase(app_commend)) {
+                    //退出腾讯视频
+                } else {
+                    try {
+                        String uriString = "txaiagent://openintent?action=queryVoiceText&text=" + app_text;
+
+                        String apiKey = "cb1fbdd4fec9e52ca3cd4b9b4dbe1c25";
+                        String token = EncryptUtils.encryptHmacSHA1ToString(uriString.getBytes(), apiKey.getBytes());
+                        Intent intent = new Intent();
+                        intent.setData(Uri.parse(uriString));
+                        intent.putExtra("token", token);
+                        intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+                        IotService.this.sendBroadcast(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
 
         }
 
