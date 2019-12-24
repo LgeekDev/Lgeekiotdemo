@@ -8,10 +8,11 @@ import android.os.IBinder;
 import android.view.KeyEvent;
 
 import com.blankj.utilcode.util.EncryptUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.lgeek.iot.parse.bean.TvDeviceAttr;
+import com.lgeek.iot.parse.bean.tencent.TencentIotBaseBean;
 import com.lgeek.iot.parse.callback.AbServiceCallBack;
 import com.lgeek.iot.parse.com.LgeekSdkMgr;
-import com.lgeek.iot.parse.com.TvDeviceAttrMgr;
 import com.lgeek.iot.parse.utils.LogUtils;
 
 import org.json.JSONObject;
@@ -55,15 +56,28 @@ public class IotService extends Service {
             super();
         }
 
-        //收到消息回复      默认有回复   如果有特殊需求可以  去掉super   自定义回复
         @Override
-        public void onReply(int msgType, String msgId, String msg, int ack) {
-            super.onReply(msgType, msgId, msg, ack);
-
-//            String s="自定义回复";
-//            LgeekSdkMgr.getInstance().publish(s);
-
+        public void onReply(TencentIotBaseBean bean) {
+            super.onReply(bean);
+            ToastUtils.showLong("腾讯消息:" + "\n消息类型：" + bean.getMsgType() + "\n消息内容:" + bean.getData().toString());
         }
+
+        @Override
+        public void onReply(int iotType, int msgType, String msgId, String msg, int ack) {
+            super.onReply(iotType, msgType, msgId, msg, ack);
+            String type = iotType == 1 ? "逻辑" : "腾讯";
+            ToastUtils.showLong(type + "消息:" + "\n消息类型：" + msgType + "\n消息内容:" + msg);
+        }
+
+        //收到消息回复      默认有回复   如果有特殊需求可以  去掉super   自定义回复
+//        @Override
+//        public void onReply(int msgType, String msgId, String msg, int ack) {
+//            super.onReply(msgType, msgId, msg, ack);
+//
+////            String s="自定义回复";
+////            LgeekSdkMgr.getInstance().publish(s);
+//
+//        }
 
         //服务端主动要求设备端上报设备状态   设备 状态 全量上报  当前设备状态上报   目前支持 电视
 
@@ -428,7 +442,7 @@ public class IotService extends Service {
         tvDeviceAttr.setPower(1);//开关   0  or  1
         tvDeviceAttr.setSwitchSignalSource("3");//视频源
         tvDeviceAttr.setVoice(50);//声音 0-100
-        TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);//用户可以主动上报
+//        TvDeviceAttrMgr.getInstance().reportDeviceAttr(tvDeviceAttr);//用户可以主动上报
     }
 
 }
