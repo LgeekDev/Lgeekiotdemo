@@ -22,7 +22,10 @@ public class MainActivity extends AppCompatActivity {
         open.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(getApplication(),null,"com.lgeek.iot.service","com.lgeek.iot.service.setting.SettingActivity",null);
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setComponent(new ComponentName("com.lgeek.iot.service", "com.lgeek.iot.service.setting.SettingActivity"));
+
+                startActivity(intent);
             }
         });
     }

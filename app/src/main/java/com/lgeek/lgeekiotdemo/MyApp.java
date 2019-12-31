@@ -49,7 +49,7 @@ public class MyApp extends Application {
          */
 
         //腾讯iot
-        LgeekSdkMgr.getInstance().init(this, "bestv", "4001", "第三方机顶盒", 6141);
+        LgeekSdkMgr.getInstance().init(this, "demo", "4001", "逻辑Demo", 6141);
         // 开启服务
         getApplicationContext().startService(new Intent(this,IotService.class));
     }

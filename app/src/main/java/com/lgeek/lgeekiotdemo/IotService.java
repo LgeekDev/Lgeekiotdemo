@@ -59,14 +59,14 @@ public class IotService extends Service {
         @Override
         public void onReply(TencentIotBaseBean bean) {
             super.onReply(bean);
-            ToastUtils.showLong("腾讯消息:" + "\n消息类型：" + bean.getMsgType() + "\n消息内容:" + bean.getData().toString());
+//            ToastUtils.showLong("腾讯消息:" + "\n消息类型：" + bean.getMsgType() + "\n消息内容:" + bean.getData().toString());
         }
 
         @Override
         public void onReply(int iotType, int msgType, String msgId, String msg, int ack) {
             super.onReply(iotType, msgType, msgId, msg, ack);
             String type = iotType == 1 ? "逻辑" : "腾讯";
-            ToastUtils.showLong(type + "消息:" + "\n消息类型：" + msgType + "\n消息内容:" + msg);
+//            ToastUtils.showLong(type + "消息:" + "\n消息类型：" + msgType + "\n消息内容:" + msg);
         }
 
         //收到消息回复      默认有回复   如果有特殊需求可以  去掉super   自定义回复
@@ -418,6 +418,21 @@ public class IotService extends Service {
         public void on551IotReSetConfigs(JSONObject jsonObject) {
             super.on551IotReSetConfigs(jsonObject);
         }
+
+//        @Override
+//        public void startPage(String s) {
+//
+//        }
+//
+//        @Override
+//        public void lightScreen(boolean b) {
+//
+//        }
+//
+//        @Override
+//        public void clearData() {
+//
+//        }
     }
 
 
